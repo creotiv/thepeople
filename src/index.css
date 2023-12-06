@@ -11,3 +11,183 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.prevent-select {
+  -webkit-user-select: none;
+  /* Safari */
+  -ms-user-select: none;
+  /* IE 10 and IE 11 */
+  user-select: none;
+  /* Standard syntax */
+}
+
+.pagebody {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 50px;
+}
+
+.intro {
+  max-width: 700px;
+  font-size: 16px;
+  line-height: 25px;
+  margin: 0 auto 30px auto;
+}
+
+.search {
+  margin-bottom: 30px;
+}
+
+.search-title {
+  font-family: 'Press Start 2P';
+  text-align: center;
+}
+
+.search-field {
+  margin-top: 10px;
+  padding: 15px;
+  width: 300px;
+  font-size: 16px;
+  border: 2px solid #333;
+  border-radius: 5px;
+}
+
+.title-img {
+  width: 100%;
+  text-align: center;
+}
+
+.title-img img {
+  max-width: 800px;
+  width: 50%;
+}
+
+a {
+  color: #00a581 !important;
+  text-decoration: none;
+  border-bottom: 1px solid #00a581;
+}
+
+@media (min-width: 1200px) {
+  .label {
+    display:none;
+  }
+
+  .table2-8bit {
+    max-width: 1200px;
+    background-color: #fff;
+    color: #333;
+    border-collapse: collapse;
+  }
+
+  .table2-8bit .tr {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+
+  .table2-8bit .head {
+    border-bottom: 2px solid #333;
+    padding: 0 20px;
+  }
+
+  .table2-8bit .th {
+    height: 30px;
+    width: 200px;
+    font-family: 'Press Start 2P';
+    background-color: #fff;
+    font-size: 12px;
+  }
+
+  .table2-8bit .th span {
+    position: relative;
+    top: -2px;
+  }
+
+  .table2-8bit .body .tr {
+    padding: 0 20px;
+  }
+
+  .table2-8bit .td {
+    width: 200px;
+    padding: 10px 0;
+    text-align: left;
+    font-size: 12px;
+  }
+
+  .table2-8bit .tr:nth-child(even) {
+    background-color: #eee;
+  }
+
+  .table2-8bit .tr:nth-child(odd) {
+    background-color: #fff;
+  }
+}
+
+@media (max-width: 1200px) {
+  .label {
+    font-weight: 600;
+  }
+
+  .pagebody {
+    padding: 0 20px;
+  }
+
+  .table2-8bit {
+    max-width: 1200px;
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    color: #333;
+    border-collapse: collapse;
+  }
+
+  .table2-8bit .tr {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+
+  .table2-8bit .head {
+    border-bottom: 2px solid #333;
+    
+  }
+
+  .table2-8bit .th {
+    width: 50%;
+    text-align: center;
+    font-family: 'Press Start 2P';
+    background-color: #fff;
+    font-size: 12px;
+    height: 30px;
+  }
+
+  .table2-8bit .th span {
+    position: relative;
+    top: -2px;
+  }
+
+  .table2-8bit .body .tr {
+    padding: 0 20px;
+  }
+
+  .table2-8bit .td {
+    width: 50%;
+    padding: 10px 0;
+    text-align: left;
+    font-size: 12px;
+  }
+
+  .table2-8bit .tr:nth-child(even) {
+    background-color: #eee;
+  }
+
+  .table2-8bit .tr:nth-child(odd) {
+    background-color: #fff;
+  }
+}
