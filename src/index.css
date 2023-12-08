@@ -35,6 +35,11 @@ code {
   margin: 0 auto 30px auto;
 }
 
+.intro-link {
+  margin-top: 20px;
+  text-align: right;
+}
+
 .search {
   margin-bottom: 30px;
 }
@@ -116,6 +121,12 @@ a {
     padding: 10px 0;
     text-align: left;
     font-size: 12px;
+    align-self:center;
+  }
+
+  .table2-8bit .td div {
+    margin: 0 10px 0 0;
+    overflow: hidden;
   }
 
   .table2-8bit .tr:nth-child(even) {
@@ -181,6 +192,12 @@ a {
     padding: 10px 0;
     text-align: left;
     font-size: 12px;
+    align-self:center;
+  }
+
+  .table2-8bit .td div {
+    margin: 0 10px 0 0;
+    overflow: hidden;
   }
 
   .table2-8bit .tr:nth-child(even) {

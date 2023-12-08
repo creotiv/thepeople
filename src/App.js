@@ -1,32 +1,55 @@
 import React, { useState, useEffect } from 'react';
 import Papa from 'papaparse';
+import DOMPurify from 'dompurify';
 import { useTable, useSortBy, useGlobalFilter } from 'react-table';
 
-const url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vR5F_5-iJaBtonNVe0YCBBfb9hRJMZVgN1fRoDCr6ciUCFDm9Du30oQeRtFP06orVMWSQGpjtitD4IC/pub?output=csv";
+const url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vR3TICsNkBp13yprTa3sQY1lD3RY-vHdVEZRwFLxEQW5idIvod87_Sp1xeZj50-7rdEAI8ahGvdcXw1/pub?output=csv";
 
 function GlobalFilter({ globalFilter, setGlobalFilter }) {
   return (
-    <div class="search">
-      <div class="search-title">Search</div>
+    <div className="search">
+      <div className="search-title">Search</div>
       <div>
         <input
           value={globalFilter || ''}
           onChange={(e) => setGlobalFilter(e.target.value || undefined)}
           placeholder={`Search all fields...`}
-          class="search-field"
+          className="search-field"
         /></div>
     </div>
   );
 }
 
 function renderCell(key, cell) {
-  const value = cell.value;
+  let value = cell.value;
+  value = DOMPurify.sanitize(value);
+
+  if (value.toLowerCase().includes("javascript:")) {
+    value = "";
+  }
+
   key = key.toLowerCase();
   // Simple regex for checking if value is a URL
-  if (key.includes("link") || key.includes("profile")) {
+  if ((key.includes("link") || key.includes("profile")) && value) {
     return <a href={value} target="_blank" rel="noopener noreferrer">Go by link</a>;
   }
   return value;
+}
+
+function filterOld(data) {
+  // Get the date for one week ago
+  const oneWeekAgo = new Date();
+  oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
+
+  // Filter the array
+  const filteredArray = data.filter(item => {
+    // Convert the Timestamp string to a Date object
+    const itemDate = new Date(item.Timestamp);
+    // Check if the item date is older than one week ago
+    return itemDate > oneWeekAgo;
+  });
+
+  return filteredArray
 }
 
 function App() {
@@ -38,7 +61,9 @@ function App() {
       download: true,
       header: true,
       complete: (results) => {
-        setData(results.data.reverse());
+        const data = filterOld(results.data.reverse());
+        setData(data);
+        console.log(data);
         if (results.data.length > 0) {
           const newColumns = Object.keys(results.data[0])
             .filter(key => key !== 'Timestamp') // Exclude the timestamp column
@@ -68,14 +93,14 @@ function App() {
 
   return (
     <div className='pagebody'>
-      <div class="intro">
+      <div className="intro">
         <div>
-          <p>Recently, more and more people have been turning to me for help in finding a job. Unfortunately, helping everyone individually is an extremely inefficient process. That's why I created this page for the recruiters I communicate with, to save both their time and mine, as well as to provide a complete list of all candidates at once.</p>
-          <p>The page is generated automatically based on the requests made to me.</p>
+          <p>Recently, an increasing number of people have sought my assistance in job hunting. However, aiding each person individually is highly inefficient. Consequently, I have established this page for both recruiters and candidates with whom I communicate. This initiative aims to conserve time for all parties involved and to offer a comprehensive list of all candidates in a single location.</p>
+          <p>The page is automatically generated based on the requests made to me.</p>
           <p>To add yourself in the list, please connect with me on <a href="https://www.linkedin.com/in/creotiv/" target="_blank" rel="noopener noreferrer">Linkedin</a> and i will send you the link to the form.</p>
-          <p><strong>If this project helped you in any way please <a href="https://uah.fund/donate">Donate</a> to help homeless animals of Ukraine</strong></p>
+          <p><strong>By utilizing the data in this list, you agree to send hiring or role acceptance bonuses as donation to the <a href="https://uah.fund/donate">Ukraine Animal Help Fund</a> to help homeless animals</strong></p>
         </div>
-        <div class="intro-link"><a href={url}>Download full list here</a></div>
+        <div className="intro-link"><a href={url}>Download full candidates list here</a></div>
       </div>
       
     
@@ -110,7 +135,7 @@ function App() {
               <div className="tr" {...row.getRowProps()}>
                 {row.cells.map(cell => (
                   <div className="td" {...cell.getCellProps()}>
-                    <span className="label">{cell.column.render('Header')}:</span> {cell.render('Cell')}
+                    <div><span className="label">{cell.column.render('Header')}:</span> {cell.render('Cell')}</div>
                   </div>
                 ))}
               </div>
